@@ -168,4 +168,18 @@
   @apply flex items-center justify-between;
 }
 
+.tag {
+  @apply relative;
+}
+
+.tag:hover::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1.5px;
+  background-image: inherit;
+  bottom: -1px;
+  left: 0;
+}
+
 @tailwind utilities;

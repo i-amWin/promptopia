@@ -32,14 +32,14 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <span className="font-satoshi text-base font-semibold text-gray-700">
             Tag{" "}
             <span className="font-normal">
-              (#product, #webdevelopment, #idea)
+              (Add tag separated by commas and spaces i.e. idea,web / idea web)
             </span>
           </span>
           <input
             type="text"
-            value={post.tag}
-            onChange={(e) => setPost({ ...post, tag: e.target.value })}
-            placeholder="#tag"
+            value={post.tags}
+            onChange={(e) => setPost({ ...post, tags: e.target.value })}
+            placeholder="#tags"
             required
             className="form_input resize-none"
           />

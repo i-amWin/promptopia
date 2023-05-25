@@ -11,7 +11,7 @@ const CreatePrompt = () => {
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     prompt: "",
-    tag: "",
+    tags: "",
   });
 
   const createPrompt = async (e) => {
@@ -26,7 +26,7 @@ const CreatePrompt = () => {
         body: JSON.stringify({
           prompt: post.prompt,
           userId: session?.user.id,
-          tag: post.tag,
+          tags: post.tags.split(/[,\s]+/g).join(","),
         }),
       });
 

@@ -12,7 +12,7 @@ const UpdatePrompt = () => {
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     prompt: "",
-    tag: "",
+    tags: "",
   });
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const UpdatePrompt = () => {
         },
         body: JSON.stringify({
           prompt: post.prompt,
-          tag: post.tag,
+          tags: post.tags.split(/[,\s]+/g).join(","),
         }),
       });
 
