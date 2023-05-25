@@ -32,7 +32,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
           <span className="font-satoshi text-base font-semibold text-gray-700">
             Tag{" "}
             <span className="font-normal">
-              (Add tag separated by commas and spaces i.e. idea,web / idea web)
+              (Add tag separated by commas and spaces)
             </span>
           </span>
           <input

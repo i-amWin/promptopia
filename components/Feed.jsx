@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useDeferredValue } from "react";
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
@@ -19,8 +19,11 @@ const PromptCardList = ({ data, handleTagClick }) => {
 };
 
 const Feed = () => {
-  const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
+
+  const [searchText, setSearchText] = useState("");
+  const [searchedResults, setSearchedResults] = useState([]);
+  const [searchTimeout, setSearchTimeout] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -33,7 +36,31 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
-  const handleSearchChange = (e) => {};
+  const filterPosts = (value) => {
+    const regex = new RegExp(value, "gi");
+    setSearchedResults(
+      posts.filter((post) => {
+        return (
+          regex.test(post.creator.username) ||
+          regex.test(post.prompt) ||
+          regex.test(post.tags)
+        );
+      })
+    );
+  };
+
+  const handleTagClick = (tag) => {
+    setSearchText(tag);
+    filterPosts(tag);
+  };
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+
+    // debounce method
+    setSearchTimeout(setTimeout(() => filterPosts(e.target.value), 500));
+  };
 
   return (
     <section className="feed">
@@ -48,7 +75,14 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={posts} handleTagClick={() => {}} />
+      {searchText ? (
+        <PromptCardList
+          data={searchedResults}
+          handleTagClick={handleTagClick}
+        />
+      ) : (
+        <PromptCardList data={posts} handleTagClick={handleTagClick} />
+      )}
     </section>
   );
 };
